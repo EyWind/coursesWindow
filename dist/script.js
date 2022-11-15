@@ -17962,6 +17962,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
 /* harmony import */ var _modules_changeCalcState__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/changeCalcState */ "./src/js/modules/changeCalcState.js");
 /* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/timer */ "./src/js/modules/timer.js");
+/* harmony import */ var _modules_images__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/images */ "./src/js/modules/images.js");
+
 
 
 
@@ -17974,8 +17976,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   var calcState = {};
   var now = new Date();
-  var deadLine = "".concat(now.getFullYear(), "-").concat(now.getMonth() + 1, "-").concat(now.getDate() + 2);
-  console.log(deadLine);
+  var deadLine = "".concat(now.getFullYear(), "-").concat(now.getMonth() + 1, "-").concat(now.getDate() + 12);
   Object(_modules_changeCalcState__WEBPACK_IMPORTED_MODULE_5__["default"])(calcState);
   Object(_modules_modals__WEBPACK_IMPORTED_MODULE_2__["default"])();
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_3__["default"])('.decoration_slider', '.no_click', '.decoration_content > div > div', 'after_click');
@@ -17983,6 +17984,7 @@ window.addEventListener('DOMContentLoaded', function () {
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_3__["default"])('.balcon_icons', '.balcon_icons_img', '.big_img > img', 'do_image_more', 'inline-block');
   Object(_modules_forms__WEBPACK_IMPORTED_MODULE_4__["default"])(calcState);
   Object(_modules_timer__WEBPACK_IMPORTED_MODULE_6__["default"])('#timer', deadLine);
+  Object(_modules_images__WEBPACK_IMPORTED_MODULE_7__["default"])();
 });
 
 /***/ }),
@@ -18185,6 +18187,46 @@ var forms = function forms(calcState) {
 
 /***/ }),
 
+/***/ "./src/js/modules/images.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/images.js ***!
+  \**********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var images = function images() {
+  var imgPopup = document.createElement('div'),
+      workSection = document.querySelector('.works'),
+      bigImg = document.createElement('img');
+  imgPopup.classList.add('popup');
+  workSection.append(imgPopup);
+  imgPopup.style.cssText = "\n      justify-content: center;\n      align-items: center;\n      display: none;\n   ";
+  bigImg.style.cssText = "\n      max-width: 80%;\n      height: auto;\n      object-fit: contain;\n   ";
+  imgPopup.append(bigImg);
+  workSection.addEventListener('click', function (e) {
+    e.preventDefault();
+    var target = e.target;
+
+    if (target && target.classList.contains('preview')) {
+      imgPopup.style.display = 'flex';
+      var path = target.parentNode.getAttribute('href');
+      bigImg.setAttribute('src', path);
+      document.body.style.overflow = 'hidden';
+    }
+
+    if (target && target.matches('div.popup')) {
+      imgPopup.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (images);
+
+/***/ }),
+
 /***/ "./src/js/modules/modals.js":
 /*!**********************************!*\
   !*** ./src/js/modules/modals.js ***!
@@ -18357,7 +18399,7 @@ var timer = function timer(selector, deadLine) {
   };
 
   var addZero = function addZero(num) {
-    return num >= 0 && num < 10 ? '0' + num : num;
+    return num < 10 ? '0' + num : num;
   };
 
   var setTime = function setTime(slctr, ePoint) {

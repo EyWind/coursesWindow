@@ -4,6 +4,7 @@ import tabs from './modules/tabs';
 import forms from './modules/forms';
 import changeCalcState from './modules/changeCalcState';
 import timer from './modules/timer';
+import images from './modules/images';
 
 window.addEventListener('DOMContentLoaded', () => {
    "use strict";
@@ -11,10 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
    let calcState = {};
    
    const now = new Date();
-   let deadLine = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate() + 2}`;
-
-
-   console.log(deadLine);
+   let deadLine = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate() + 12}`;
 
    changeCalcState(calcState);
    modals();
@@ -23,5 +21,6 @@ window.addEventListener('DOMContentLoaded', () => {
    tabs('.balcon_icons', '.balcon_icons_img','.big_img > img', 'do_image_more', 'inline-block');
    forms(calcState);
    timer('#timer', deadLine);
+   images();
 
 });

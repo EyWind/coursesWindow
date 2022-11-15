@@ -10,9 +10,7 @@ const timer = (selector, deadLine) => {
       return {total, days, hours, minutes, seconds}
    }
 
-   const addZero = num => {
-      return (num >= 0 && num < 10) ? '0' + num : num;
-   }
+   const addZero = num =>  num < 10 ? '0' + num : num;
 
    const setTime = (slctr, ePoint) => {
 
