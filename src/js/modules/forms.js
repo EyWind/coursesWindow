@@ -1,10 +1,12 @@
-const forms = () => {
+import numInptValidate from "./numInptValidate";
+import closeModalWindows from "./closeModalWindows";
+
+const forms = (calcState) => {
 
    const form = document.querySelectorAll('form'),
-         inputs = document.querySelectorAll('input'),
-         phoneInpts = document.querySelectorAll('input[name="user_phone"]');
-
-   phoneInpts.forEach(e => e.addEventListener('input', () => e.value = e.value.replace(/\D/, '')));
+         inputs = document.querySelectorAll('input');
+         
+   numInptValidate('input[name="user_phone"]');
 
    const msgs = {
       loading: 'Loading...',
@@ -32,6 +34,11 @@ const forms = () => {
          formItem.appendChild(statusMsg);
 
          const formData = new FormData(formItem);
+         if (formItem.getAttribute("data-type") === 'calc_end') {
+            for (let key in calcState) {
+               formData.append(key, calcState[key]);
+            }
+         }
 
          postData('assets/server.php', formData)
             .then(data => {
@@ -41,7 +48,11 @@ const forms = () => {
             .catch(() => statusMsg.textContent = msgs.failure)
             .finally(() => {
                inputs.forEach(e => e.value = '');
-               setTimeout(() => statusMsg.remove(), 5000);
+               for (let key in calcState) delete calcState[key];
+               setTimeout(() => {
+                  statusMsg.remove();
+                  closeModalWindows();
+               }, 5000);
             });
       })
    });
